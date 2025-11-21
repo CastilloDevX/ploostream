@@ -11,12 +11,10 @@ service = ScraperService(provider_registry)
 
 # ---- FILTER datetime (necesario para Kakarotfoot) ----
 @app.template_filter("datetime")
-def datetime_filter(timestamp):
+def datetime_filter(ts):
     try:
-        timestamp = int(timestamp)
-        if timestamp <= 0:
-            return "N/A"
-        return datetime.utcfromtimestamp(timestamp / 1000).strftime("%Y-%m-%d %H:%M:%S")
+        ts = int(ts)
+        return datetime.utcfromtimestamp(ts/1000).strftime("%Y-%m-%d %H:%M:%S") if ts > 0 else "-"
     except Exception:
         return "-"
 
